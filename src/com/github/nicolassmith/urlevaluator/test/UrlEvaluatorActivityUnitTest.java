@@ -9,12 +9,11 @@ import android.test.ActivityUnitTestCase;
 
 public class UrlEvaluatorActivityUnitTest extends ActivityUnitTestCase<UrlEvaluatorActivity> {
 
+	private static final String TEST_FLAG = "thisisonlyatest";
+
 	private static final int SLEEP_MILLISECONDS = 100;
 
 	private Context context;
-
-	String inputTestUrl = "http://youtu.be/I4cSVnqGmOc";
-	String expectedResultUrl = "http://www.youtube.com/watch?v=I4cSVnqGmOc&feature=youtu.be";
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -27,32 +26,32 @@ public class UrlEvaluatorActivityUnitTest extends ActivityUnitTestCase<UrlEvalua
 		super(UrlEvaluatorActivity.class);
 	}
 	
-	public void testShortUrls() throws Exception{
-		
-		
-		startEvaluatorActivity(inputTestUrl);
-		
-		while(getStartedActivityIntent()==null){
-			// wait for it
-			Thread.sleep(SLEEP_MILLISECONDS);
-		}
-		
+	protected void shortUrlTest(String inputUrl,String expectedUrl) throws InterruptedException {
+		startEvaluatorActivity(inputUrl);
+		waitForEvaluatedActivityStart();
 		// an Intent was started
-		assertStartedActivityUrl(expectedResultUrl);
-	}
-
-	private void assertStartedActivityUrl(String expectedUrl) {
-		Intent startedIntent = getStartedActivityIntent();
-		String returnedUrl = startedIntent.getData().toString();
-		
-		assertEquals("wrong url returned",expectedUrl,returnedUrl);
+		assertEvaluatedActivityUrl(expectedUrl);
 	}
 
 	private void startEvaluatorActivity(String inputUrl) {
 		Intent intent = new Intent(context, UrlEvaluatorActivity.class);
 		intent.setData(Uri.parse(inputUrl));
-		intent.putExtra("thisisonlyatest", true);
+		intent.putExtra(TEST_FLAG, true);
 		startActivity(intent, null, null);
+	}
+
+	private void waitForEvaluatedActivityStart() throws InterruptedException {
+		while(getStartedActivityIntent()==null){
+			// wait for it
+			Thread.sleep(SLEEP_MILLISECONDS);
+		}
+	}
+
+	private void assertEvaluatedActivityUrl(String expectedUrl) {
+		Intent startedIntent = getStartedActivityIntent();
+		String returnedUrl = startedIntent.getData().toString();
+		
+		assertEquals("wrong url returned",expectedUrl,returnedUrl);
 	}
 
 }
