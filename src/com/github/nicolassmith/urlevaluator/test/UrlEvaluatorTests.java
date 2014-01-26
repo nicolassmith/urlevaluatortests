@@ -66,5 +66,11 @@ public class UrlEvaluatorTests extends UrlEvaluatorActivityUnitTest {
 				"http://www.dpbolvw.net/click-5684644-11115853?url=https://www.tanga.com/deals/eb6c0940827e/padded-room-t-shirt?internal_campaign=channel", 
 				"https://www.tanga.com/deals/eb6c0940827e/padded-room-t-shirt?internal_campaign=channel");
 	}
+
+	public void testGOOGLEQ() throws Exception{
+		shortUrlTest(
+				"https://www.google.com/url?q=http://www.example.com", 
+				"http://www.example.com");
+	}
 	
 }
