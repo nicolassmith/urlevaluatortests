@@ -60,5 +60,11 @@ public class UrlEvaluatorTests extends UrlEvaluatorActivityUnitTest {
 				"http://git.io/lNEtmA", 
 				"https://github.com/nicolassmith/urlevaluator/issues/9");
 	}
+
+	public void testWOOTCHECK() throws Exception{
+		shortUrlTest(
+				"http://www.dpbolvw.net/click-5684644-11115853?url=https://www.tanga.com/deals/eb6c0940827e/padded-room-t-shirt?internal_campaign=channel", 
+				"https://www.tanga.com/deals/eb6c0940827e/padded-room-t-shirt?internal_campaign=channel");
+	}
 	
 }
